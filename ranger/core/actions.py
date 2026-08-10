@@ -242,11 +242,11 @@ class Actions(  # pylint: disable=too-many-instance-attributes,too-many-public-m
         cmd = cmd_class(string, quantifier=quantifier)
 
         if '%nowarn' not in string and re.search(r'\bconsole .*[^%]%s\b', string):
-            self.notify("WARNING: Your command `" + string + \
-                    "` seems to use the `%s` macro dangerously. "
-                    "`:console` does not escape `%s`, so you should escape it "
-                    "yourself by replacing it with `%%s`. "
-                    "Use %nowarn macro in the command if you know what you're doing.")
+            self.notify("WARNING: Your command `" + string
+                        + "` seems to use the `%s` macro dangerously. "
+                        "`:console` does not escape `%s`, so you should escape it "
+                        "yourself by replacing it with `%%s`. "
+                        "Use %nowarn macro in the command if you know what you're doing.")
 
         if cmd.resolve_macros and _MacroTemplate.delimiter in cmd.line:
             def any_macro(i, char):
