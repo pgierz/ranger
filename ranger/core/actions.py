@@ -241,11 +241,12 @@ class Actions(  # pylint: disable=too-many-instance-attributes,too-many-public-m
             return None
         cmd = cmd_class(string, quantifier=quantifier)
 
-        if re.search(r'\bconsole .*[^%]%s\b', string):
+        if '%nowarn' not in string and re.search(r'\bconsole .*[^%]%s\b', string):
             self.notify("WARNING: Your command `" + string + \
                     "` seems to use the `%s` macro dangerously. "
                     "`:console` does not escape `%s`, so you should escape it "
-                    "yourself by replacing it with `%%s`.")
+                    "yourself by replacing it with `%%s`. "
+                    "Use %nowarn macro in the command if you know what you're doing.")
 
         if cmd.resolve_macros and _MacroTemplate.delimiter in cmd.line:
             def any_macro(i, char):
@@ -310,6 +311,7 @@ class Actions(  # pylint: disable=too-many-instance-attributes,too-many-public-m
             macros['confdir'] = self.fm.confpath()
             macros['datadir'] = self.fm.datapath()
         macros['space'] = ' '
+        macros['nowarn'] = ''  # used to suppress warnings about macro usage
 
         macros['f'] = lambda: self.fm.thisfile.relative_path
 
